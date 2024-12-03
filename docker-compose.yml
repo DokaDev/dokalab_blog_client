@@ -1,0 +1,19 @@
+services:
+  dokalab_blog_client:
+    build:
+      context: .
+    container_name: dokalab_blog_client
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    networks:
+      - dokalab_blog_network
+    restart: unless-stopped
+
+networks:
+  dokalab_blog_network:
+    driver: bridge
