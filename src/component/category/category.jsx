@@ -1,15 +1,13 @@
 import React from "react";
 import "./category.css";
 
-import Icon from "../../assets/post_icon.png";
-
-export default function Category({ name, postCount }) {
+export default function Category({ name, postCount, isSubCategory }) {
     return (
-        <div className="category">
-            {/* // CategoryName[PostCount] */}
-            {/* Category1[10] */}
-            <img src={Icon} alt="icon" width="16px" height="16px" className="categoryIcon"/>
-            {name}[{postCount}]
+        <div 
+            className={`category ${isSubCategory ? 'sub-category' : ''}`}
+            data-count={`[${postCount}]`}
+        >
+            {name}
         </div>
     )
 }

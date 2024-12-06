@@ -7,22 +7,19 @@ import logo from "../../assets/dokadev.svg"
 export default function Header({ gnbItems }) {
     return (
         <header className="header-container">
-            <div className="header-logo">
-                <img src={logo} alt="logo" className="logoImage"/>
+            <div className="header-content">
+                <div className="header-logo">
+                    <img src={logo} alt="logo" className="logoImage"/>
+                </div>
+                
+                <nav className="header-gnb">
+                    {gnbItems.map((item, index) => (
+                        <a key={index} href={item.endpoint}>
+                            {item.name}
+                        </a>
+                    ))}
+                </nav>
             </div>
-            
-            {/* <div className="header-auth">
-                <button>Login</button>
-                <button>Register</button>
-            </div> */}
-
-            <nav className="header-gnb">
-                {gnbItems.map((item, index) => (
-                    <a key={index} href={item.endpoint}>
-                        {item.name}
-                    </a>
-                ))}
-            </nav>
         </header>
     );
 }
