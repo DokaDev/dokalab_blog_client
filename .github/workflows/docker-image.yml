@@ -25,12 +25,4 @@ jobs:
           cd /root/dokalab_blog_client
           git pull
           docker compose down -v
-          docker compose up -d
-          # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          # docker stop ${{ vars.APP_NAME }}
-          # docker rm -f ${{ vars.APP_NAME }}
-          # docker pull ${{ secrets.DOCKER_USERNAME }}/${{ vars.APP_NAME }}:${{ github.ref_name }}
-          # docker run -d --name ${{ vars.APP_NAME }} -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{ vars.APP_NAME }}:${{ github.ref_name }}
-          # docker image prune -f
-
-      
+          docker compose up -d --build
