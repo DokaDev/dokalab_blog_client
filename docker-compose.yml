@@ -16,4 +16,4 @@ services:
 
 networks:
   dokalab_blog_network:
-    driver: bridge
+    external: true
