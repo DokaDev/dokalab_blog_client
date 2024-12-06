@@ -7,22 +7,17 @@ import Layout from "./layout/layout";
 import Main from "./page/main/main";
 import About from "./page/about/about";
 import PostDetail from "./page/post/post_detail";
+import CategoryPage from "./page/category/categoryPage.tsx";
 
 function App() {
     return (
-        // <Router>
-        //     <Routes>
-        //         <Route path="/" element={<Main />} />
-        //         <Route path="/about" element={<About />} />
-        //         <Route path="/post/:id" element={<PostDetail />} />
-        //     </Routes>
-        // </Router>
         <Router>
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Main />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/post/:id" element={<PostDetail />} />
+                    <Route path="/category/:id" element={<CategoryPage />} />
                 </Route>
             </Routes>
         </Router>

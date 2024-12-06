@@ -4,7 +4,21 @@ export interface Category {
     postCount: number;
     isSubCategory: boolean;
     parentId?: number;
-    order: number;
+    // order: number;
+}
+
+export interface CategoryAndPost {
+    id: number;
+    name: string;
+    parentName?: string;
+    posts: Post[];
+}
+
+export interface Post {
+    postId: number;
+    postTitle: string;
+    summary: string;
+    postDate: string;
 }
 
 // 필요한 경우 카테고리 관련 추가 타입들도 여기서 정의할 수 있습니다

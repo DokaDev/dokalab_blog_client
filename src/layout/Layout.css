@@ -28,6 +28,16 @@ body {
     flex: 1;
     min-width: 0;
     padding: 0 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .inner h1 {

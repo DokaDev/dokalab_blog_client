@@ -9,9 +9,9 @@ export default function Header({ gnbItems }) {
     return (
         <header className="header-container">
             <div className="header-content">
-                <Link to="/" className="header-logo">
+                <a href="/" className="header-logo">
                     <img src={logo} alt="logo" className="logoImage"/>
-                </Link>
+                </a>
                 
                 <nav className="header-gnb">
                     {gnbItems.map((item, index) => (

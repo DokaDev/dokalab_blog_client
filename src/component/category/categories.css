@@ -25,6 +25,10 @@
     cursor: pointer;
 }
 
+.category + .sub-category {
+    margin-top: -0.25rem;
+}
+
 .category:hover {
     color: #2563eb;
     transform: translateX(4px);
@@ -32,5 +36,7 @@
 
 .sub-category {
     padding-left: 16px;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
     color: #666;
 }
