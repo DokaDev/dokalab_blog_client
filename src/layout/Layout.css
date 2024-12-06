@@ -1,0 +1,70 @@
+/* Layout.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #bfa2db;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.gnb {
+    display: flex;
+    gap: 15px;
+}
+
+.gnb a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.gnb a:hover {
+    color: #f4f4f4;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    background-color: #f4e1f0;
+}
+
+.category {
+    width: 20%;
+    background-color: #cdb4db;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+}
+
+.inner {
+    flex: 1;
+    background-color: #f4e4ec;
+    padding: 20px;
+}
+
+.footer {
+    background-color: #bfa2db;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
