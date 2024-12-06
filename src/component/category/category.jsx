@@ -7,7 +7,7 @@ export default function Category({ name, postCount, isSubCategory }) {
             className={`category ${isSubCategory ? 'sub-category' : ''}`}
             data-count={`[${postCount}]`}
         >
-            {name}
+            {name} 
         </div>
     )
 }

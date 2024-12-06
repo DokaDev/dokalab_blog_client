@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import Header from "../component/header/header";
-import Categories from "../component/category/categories";
+import Categories from '../component/category/categories.tsx'
 
 import "./Layout.css"; // 별도 CSS 파일을 임포트
 import { siteConfig } from '../config/site';
