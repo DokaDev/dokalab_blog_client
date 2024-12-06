@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import "./header.css";
 import logo from "../../assets/dokadev.svg"
@@ -8,9 +9,9 @@ export default function Header({ gnbItems }) {
     return (
         <header className="header-container">
             <div className="header-content">
-                <div className="header-logo">
+                <Link to="/" className="header-logo">
                     <img src={logo} alt="logo" className="logoImage"/>
-                </div>
+                </Link>
                 
                 <nav className="header-gnb">
                     {gnbItems.map((item, index) => (

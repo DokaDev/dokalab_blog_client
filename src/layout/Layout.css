@@ -16,12 +16,12 @@ body {
 .content {
     display: flex;
     align-items: flex-start;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2.5rem 2rem;
+    padding: 2.5rem 0;
     width: 100%;
     box-sizing: border-box;
-    gap: 3rem;
+    gap: 4rem;
 }
 
 .inner {
@@ -56,10 +56,9 @@ body {
 }
 
 /* 중간 크기 화면 (1200px ~ 1024px) */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
     .content {
-        padding: 2rem;
-        gap: 2rem;
+        padding: 2.5rem 2rem;
     }
 }
 

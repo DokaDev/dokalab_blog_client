@@ -1,12 +1,14 @@
 .categories {
     border: 1px solid #eaeaea;
     border-radius: 16px;
+    width: 250px;
     min-width: 250px;
     padding: 1.5rem;
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 100px;
+    margin-left: 2rem;
 }
 
 .categories_text {
