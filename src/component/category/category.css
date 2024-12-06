@@ -1,0 +1,8 @@
+.category {
+    margin: 10px;
+    display: flex;
+}
+
+.categoryIcon {
+    margin-right: 2px;
+}

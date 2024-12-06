@@ -1,0 +1,52 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background-color: white;
+    border-bottom: 2px solid rgb(212, 212, 212);
+    margin-bottom: 25px
+}
+.logoImage {
+    width: 110px;
+    height: auto;
+
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-gnb {
+    display: flex;
+    gap: 20px;
+}
+
+.header-gnb a {
+    text-decoration: none;
+    color: #333;
+    /* font-weight: bold; */
+}
+
+.header-gnb a:hover {
+    color: #555;
+}
+
+.header-auth {
+    display: flex;
+    gap: 10px;
+}
+
+.header-auth button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #555;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header-auth button:hover {
+    background-color: #777;
+}
