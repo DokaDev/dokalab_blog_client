@@ -16,24 +16,27 @@ export default function Layout() {
 
     return (
         <div className="layout">
-            {/* <header className="header">
-                <div className="logo">Logo</div>
-                <nav className="gnb">
-                    <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
-                    <Link to="/post/1">Post 1</Link>
-                    <Link to="/post/2">Post 2</Link>
-                </nav>
-            </header> */}
             <Header gnbItems={gnbItems}/>
             <div className="content">
-                {/* <aside className="category">Category</aside> */}
                 <Categories />
                 <main className="inner">
                     <Outlet />
                 </main>
             </div>
-            <footer className="footer">Footer</footer>
+            <footer className="footer">
+                <div className="footer-content">
+                    <div className="footer-left">
+                        <div className="footer-logo">DokaDev</div>
+                        <div className="footer-copyright">© 2024 DokaDev. All rights reserved.</div>
+                    </div>
+                    <div className="footer-links">
+                        <a href="https://github.com/yourusername" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://twitter.com/yourusername" className="footer-link" target="_blank" rel="noopener noreferrer">Twitter</a>
+                        <a href="/rss" className="footer-link">RSS</a>
+                        <a href="/privacy" className="footer-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

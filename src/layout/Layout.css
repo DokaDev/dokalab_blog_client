@@ -49,10 +49,51 @@ body {
 .footer {
     border-top: 1px solid #eaeaea;
     margin-top: auto;
-    padding: 2rem 0;
+    padding: 3rem 0;
     text-align: center;
     color: #666;
     background-color: #fff;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.footer-copyright {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: #2563eb;
 }
 
 /* 중간 크기 화면 (1200px ~ 1024px) */
@@ -85,5 +126,19 @@ body {
     .inner {
         width: 100%;
         max-width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .footer-left {
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
     }
 }
