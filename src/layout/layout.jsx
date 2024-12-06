@@ -5,6 +5,7 @@ import Header from "../component/header/header";
 import Categories from "../component/category/categories";
 
 import "./Layout.css"; // 별도 CSS 파일을 임포트
+import { siteConfig } from '../config/site';
 
 export default function Layout() {
     const gnbItems = [
@@ -26,8 +27,10 @@ export default function Layout() {
             <footer className="footer">
                 <div className="footer-content">
                     <div className="footer-left">
-                        <div className="footer-logo">DokaDev</div>
-                        <div className="footer-copyright">© 2024 DokaDev. All rights reserved.</div>
+                        <div className="footer-logo">{siteConfig.author}</div>
+                        <div className="footer-copyright">
+                            © {new Date().getFullYear()} {siteConfig.author}. All rights reserved.
+                        </div>
                     </div>
                     <div className="footer-links">
                         <a href="https://github.com/yourusername" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>

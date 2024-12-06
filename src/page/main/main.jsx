@@ -1,6 +1,9 @@
 import React from "react";
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export default function Main() {
+    usePageTitle('Home');
+
     return (
         <div>
             <h1>Welcome to DokaDev</h1>
