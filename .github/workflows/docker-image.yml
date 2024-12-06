@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.ref }}
+    - name: login to server and run the container
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /root/dokalab_blog_client
+          git pull
+          docker compose down -v
+          docker compose up -d
+          # docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          # docker stop ${{ vars.APP_NAME }}
+          # docker rm -f ${{ vars.APP_NAME }}
+          # docker pull ${{ secrets.DOCKER_USERNAME }}/${{ vars.APP_NAME }}:${{ github.ref_name }}
+          # docker run -d --name ${{ vars.APP_NAME }} -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/${{ vars.APP_NAME }}:${{ github.ref_name }}
+          # docker image prune -f
+
+      
