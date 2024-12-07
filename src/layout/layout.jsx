@@ -11,8 +11,8 @@ export default function Layout() {
     const gnbItems = [
         { name: "Home", endpoint: "/" },
         { name: "About", endpoint: "/about" },
-        { name: "Post 1", endpoint: "/post/1" },
-        { name: "Post 2", endpoint: "/post/2" },
+        { name: "Post 1", endpoint: "/article/1" },
+        { name: "Post 2", endpoint: "/article/2" },
     ]
 
     return (

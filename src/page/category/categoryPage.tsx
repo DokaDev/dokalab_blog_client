@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./categoryPage.css";
 import { API_BASE_URL } from '../../config/config';
 
@@ -26,6 +26,7 @@ interface CategoryData {
 
 export default function CategoryPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [posts, setPosts] = useState<Post[]>([]);
     const [categoryData, setCategoryData] = useState<CategoryData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -62,6 +63,10 @@ export default function CategoryPage() {
         fetchPosts();
     }, [id]);
 
+    const handlePostClick = (postId: number) => {
+        navigate(`/article/${postId}`);
+    };
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
     if (!posts.length) return (
@@ -82,7 +87,12 @@ export default function CategoryPage() {
             <h1>{categoryData?.name}</h1>
             <div className="post-grid">
                 {posts.map((post) => (
-                    <div key={post.postId || post.id} className="post-card">
+                    <div 
+                        key={post.postId || post.id} 
+                        className="post-card"
+                        onClick={() => handlePostClick(post.postId || post.id!)}
+                        style={{ cursor: 'pointer' }}
+                    >
                         <div className="post-thumbnail">
                             <img src="https://via.placeholder.com/300x200" alt={post.postTitle || post.title} />
                         </div>

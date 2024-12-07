@@ -6,8 +6,9 @@ import Layout from "./layout/layout";
 
 import Main from "./page/main/main";
 import About from "./page/about/about";
-import PostDetail from "./page/post/post_detail";
 import CategoryPage from "./page/category/categoryPage.tsx";
+import ArticlePage from "./page/article/articlePage.tsx";
+import NotFound from "./page/notFound/notFound.tsx";
 
 function App() {
     return (
@@ -16,8 +17,9 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Main />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/post/:id" element={<PostDetail />} />
                     <Route path="/category/:id" element={<CategoryPage />} />
+                    <Route path="/article/:id" element={<ArticlePage />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </Router>

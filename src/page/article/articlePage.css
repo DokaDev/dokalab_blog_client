@@ -1,0 +1,26 @@
+.article-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.article-header {
+    margin-bottom: 30px;
+}
+
+.article-header h1 {
+    margin-bottom: 10px;
+}
+
+.article-meta {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.article-category {
+    margin-right: 15px;
+}
+
+.article-content {
+    line-height: 1.6;
+} 
