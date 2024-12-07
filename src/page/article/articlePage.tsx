@@ -40,9 +40,9 @@ export default function ArticlePage() {
         fetchArticle();
     }, [id]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!article) return <div>Article not found</div>;
+    if (loading) return <div className="article-loading">Loading...</div>;
+    if (error) return <div className="article-loading">Error: {error}</div>;
+    if (!article) return <div className="article-loading">Article not found</div>;
 
     return (
         <div className="article-page">
@@ -50,9 +50,21 @@ export default function ArticlePage() {
                 <h1>{article.postTitle}</h1>
                 <div className="article-meta">
                     <span className="article-category">
-                        {article.parentCategoryName ? 
-                            `${article.parentCategoryName} > ${article.categoryName}` : 
-                            article.categoryName}
+                        {article.parentCategoryName ? (
+                            <>
+                                <a href={`/category/${article.parentCategoryId}`}>
+                                    {article.parentCategoryName}
+                                </a>
+                                <span className="separator">&gt;</span>
+                                <a href={`/category/${article.categoryId}`}>
+                                    {article.categoryName}
+                                </a>
+                            </>
+                        ) : (
+                            <a href={`/category/${article.categoryId}`}>
+                                {article.categoryName}
+                            </a>
+                        )}
                     </span>
                     <span className="article-date">
                         {new Date(article.createdAt).toLocaleDateString()}
