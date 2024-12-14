@@ -1,0 +1,16 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #44475a;
+  padding: 1.2rem 3rem;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(44, 62, 80, 0.1);
+
+  &.scrolled {
+    padding: 1rem 3rem;
+    background: rgba(44, 62, 80, 0.98);
+  }
+} 
