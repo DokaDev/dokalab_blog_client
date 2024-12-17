@@ -1,14 +1,52 @@
 .category-item {
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  position: relative;
   transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: block;
 
-  &:last-child {
-    border-bottom: none;
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 70%;
+    background-color: #4299e1;
+    border-radius: 0 2px 2px 0;
+    transition: transform 0.2s ease-in-out;
   }
 
-  &:hover {
-    background-color: #f8f9fa;
+  &:hover, &.active {
+    background-color: #f8fafc;
+    padding-left: 1rem;
+
+    &::before {
+      transform: translateY(-50%) scaleY(1);
+    }
+
+    .category-header {
+      .category-title .category-name {
+        color: #4299e1;
+      }
+    }
+  }
+
+  &.active {
+    background-color: #ebf8ff;
+
+    &::before {
+      background-color: #3182ce;
+    }
+
+    .category-header {
+      .category-title .category-name {
+        color: #2c5282;
+        font-weight: 600;
+      }
+    }
   }
 
   .category-header {
@@ -17,35 +55,45 @@
     justify-content: space-between;
     
     .category-title {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      position: relative;
 
-      a {
-        color: #2b3044;
-        text-decoration: none;
+      .category-name {
+        color: #4a5568;
         font-weight: 500;
-        font-size: 1rem;
-        
-        &:hover {
-          color: #4a90e2;
+        font-size: 0.95rem;
+        transition: color 0.2s ease-in-out;
+      }
+
+      .tooltip {
+        position: fixed;
+        transform-origin: top left;
+        background-color: rgba(66, 153, 225, 0.15);
+        backdrop-filter: blur(8px);
+        color: #2d3748;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        white-space: nowrap;
+        z-index: 1000;
+        border: 1px solid rgba(66, 153, 225, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(0, 5px);
+        transition: all 0.2s ease-in-out;
+
+        &[data-show="true"] {
+          opacity: 1;
+          transform: translate(0, 8px);
         }
       }
-
-      span {
-        color: #6c757d;
-        font-size: 0.85rem;
-        background: #f1f3f5;
-        padding: 0.2rem 0.5rem;
-        border-radius: 12px;
-      }
     }
-  }
 
-  .category-description {
-    margin-top: 0.4rem;
-    color: #6c757d;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    .post-count {
+      color: #a0aec0;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
   }
 } 

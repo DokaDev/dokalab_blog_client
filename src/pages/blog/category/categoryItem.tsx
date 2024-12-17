@@ -1,17 +1,54 @@
-import { Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import './categoryItem.scss';
 
-const CategoryItem: React.FC<CategoryProps> = ({ id, name, description, postCount }) => {
+interface CategoryItemProps extends CategoryProps {
+    className?: string;
+}
+
+const CategoryItem: React.FC<CategoryItemProps> = ({ 
+    id, 
+    name, 
+    description, 
+    postCount,
+    className 
+}) => {
+    const [showTooltip, setShowTooltip] = useState(false);
+    const timerRef = useRef<number>();
+
+    const handleMouseEnter = () => {
+        timerRef.current = window.setTimeout(() => {
+            setShowTooltip(true);
+        }, 700);
+    };
+
+    const handleMouseLeave = () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = undefined;
+        }
+        setShowTooltip(false);
+    };
+
     return (
-        <div className="category-item">
+        <NavLink 
+            to={`/blog/${id}`} 
+            className={({ isActive }) => 
+                `category-item ${className || ''} ${isActive ? 'active' : ''}`
+            }
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             <div className="category-header">
                 <div className="category-title">
-                    <Link to={`/blog/${id}`}>{name}</Link>
-                    <span>{postCount} posts</span>
+                    <span className="category-name">{name}</span>
+                    <div className="tooltip" data-show={showTooltip}>
+                        {description}
+                    </div>
                 </div>
+                <span className="post-count">{postCount} posts</span>
             </div>
-            <div className="category-description">{description}</div>
-        </div>
+        </NavLink>
     );
 };
 

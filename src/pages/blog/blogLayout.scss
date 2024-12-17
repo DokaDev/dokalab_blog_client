@@ -5,23 +5,19 @@
   min-height: calc(100vh - 73px - 4rem); // viewport height - header height - padding
 
   .blog-sidebar {
-    flex: 0 0 300px; // 고정 너비
+    flex: 0 0 240px; // 300px에서 240px로 줄임
     position: sticky;
     top: calc(73px + 2rem); // header height + padding
     height: fit-content;
     max-height: calc(100vh - 73px - 4rem); // viewport height - header height - padding
     overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
+    padding-right: 2rem;
   }
 
   .blog-content {
     flex: 1;
     min-width: 0; // flex item overflow 방지
-    
-    // 임시 스타일
-    padding: 1rem;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   // 반응형 디자인
@@ -33,6 +29,11 @@
       position: relative;
       top: 0;
       width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #e5e7eb;
+      padding-right: 0;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
     }
   }
 } 
