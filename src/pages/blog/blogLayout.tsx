@@ -25,7 +25,6 @@ const BlogLayout: React.FC<{ contentNode: React.ReactNode }> = ({ contentNode })
             ]
         }
     ];
-
     return (
         <div className="blog-layout">
             <aside className="blog-sidebar">

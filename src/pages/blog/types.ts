@@ -6,4 +6,12 @@ export interface TagProps {
 export interface CategoryProps {
     id: number;
     name: string;
+    description: string;
+    postCount: number;
+    className?: string;
+}
+
+export interface ArticleCategoryProps {
+    id: number;
+    name: string;
 } 

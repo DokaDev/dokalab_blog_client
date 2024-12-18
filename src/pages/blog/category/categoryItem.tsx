@@ -2,11 +2,7 @@ import { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import './categoryItem.scss';
 
-interface CategoryItemProps extends CategoryProps {
-    className?: string;
-}
-
-const CategoryItem: React.FC<CategoryItemProps> = ({ 
+const CategoryItem: React.FC<CategoryProps> = ({ 
     id, 
     name, 
     description, 
@@ -30,9 +26,12 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
         setShowTooltip(false);
     };
 
+    const linkPath = id === 0 ? "/blog" : `/blog/category/${id}`;
+
     return (
         <NavLink 
-            to={`/blog/${id}`} 
+            to={linkPath}
+            end={id === 0}
             className={({ isActive }) => 
                 `category-item ${className || ''} ${isActive ? 'active' : ''}`
             }

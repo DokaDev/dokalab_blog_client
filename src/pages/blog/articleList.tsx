@@ -1,16 +1,47 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ArticleCard, { ArticleCardProps } from "./articleCard/articleCard";
 import './articleList.scss';
 
-const ArticleList: React.FC = () => {
-    const { categoryId } = useParams();
-    
-    // 임시 데이터 - 현재 카테고리 정보
-    const currentCategory = {
-        name: "React",
-        description: "React 관련 기술 블로그 글 모음",
-        postCount: 10
+interface ArticleListProps {
+    type: 'all' | 'category' | 'tag' | 'search';
+}
+
+const ArticleList: React.FC<ArticleListProps> = ({ type }) => {
+    const { id } = useParams();
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get('query');
+
+    // 현재 목록의 타입에 따른 제목과 설명 설정
+    const getCurrentHeader = () => {
+        switch (type) {
+            case 'all':
+                return {
+                    name: "All Posts",
+                    description: "모든 기술 블로그 글 모음",
+                    postCount: 35
+                };
+            case 'category':
+                return {
+                    name: "React",
+                    description: "React 관련 기술 블로그 글 모음",
+                    postCount: 10
+                };
+            case 'tag':
+                return {
+                    name: "[React Query] Tag",
+                    description: "React Query 관련 글 모음",
+                    postCount: 5
+                };
+            case 'search':
+                return {
+                    name: `Search: ${query}`,
+                    description: `"${query}" 검색 결과`,
+                    postCount: 3
+                };
+        }
     };
+
+    const currentHeader = getCurrentHeader();
 
     // 임시 게시글 데이터
     const articles: ArticleCardProps[] = [
@@ -53,9 +84,9 @@ const ArticleList: React.FC = () => {
     return (
         <div className="article-list">
             <div className="category-header">
-                <div className="category-title">{currentCategory.name}</div>
-                <div className="category-description">{currentCategory.description}</div>
-                <span className="post-count">{currentCategory.postCount} posts</span>
+                <div className="category-title">{currentHeader.name}</div>
+                <div className="category-description">{currentHeader.description}</div>
+                <span className="post-count">{currentHeader.postCount} posts</span>
             </div>
             <div className="articles-container">
                 {articles.map(article => (

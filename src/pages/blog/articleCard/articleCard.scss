@@ -99,6 +99,15 @@
                 background-color: #E2E8F0;
                 color: #2D3748;
             }
+
+            &.active {
+                background-color: #4299e1;
+                color: white;
+
+                &:hover {
+                    background-color: #3182ce;
+                }
+            }
         }
     }
 } 

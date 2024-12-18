@@ -1,6 +1,6 @@
 import './articleCard.scss';
-import { TagProps, CategoryProps } from '../types';
-import { Link } from 'react-router-dom';
+import { TagProps, ArticleCategoryProps } from '../types';
+import { Link, NavLink } from 'react-router-dom';
 
 export interface ArticleCardProps {
     id: number;
@@ -9,7 +9,7 @@ export interface ArticleCardProps {
     date: string;
     readTime: string;
     tags: TagProps[];
-    category: CategoryProps;
+    category: ArticleCategoryProps;
     showCategory?: boolean;
 }
 
@@ -28,7 +28,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             <article className="article-card">
                 {showCategory && (
                     <Link 
-                        to={`/blog/${category.id}`} 
+                        to={`/blog/category/${category.id}`} 
                         className="article-category"
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -43,14 +43,16 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
                 <p className="article-description">{description}</p>
                 <div className="article-tags">
                     {tags.map(tag => (
-                        <Link 
+                        <NavLink 
                             key={tag.id} 
                             to={`/blog/tag/${tag.id}`}
-                            className="tag"
+                            className={({ isActive }) => 
+                                `tag ${isActive ? 'active' : ''}`
+                            }
                             onClick={(e) => e.stopPropagation()}
                         >
                             {tag.name}
-                        </Link>
+                        </NavLink>
                     ))}
                 </div>
             </article>

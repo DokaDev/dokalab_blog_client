@@ -1,7 +1,7 @@
 import { usePageTitle } from "../../hooks/usePageTitle";
 
 const Main: React.FC = () => {
-    usePageTitle("Main Page");
+    usePageTitle("");
     return <div>Main Page</div>;
 };
 
