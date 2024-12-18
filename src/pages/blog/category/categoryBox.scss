@@ -24,8 +24,12 @@
 
     .post-count {
       font-size: 0.9rem !important;
-      // color: #4299e1 !important;
-      // color: #4299e1 !important;
+      color: #718096 !important;
+    }
+
+    .tooltip {
+      background-color: rgba(244, 182, 196, 0.15) !important;
+      border-color: rgba(244, 182, 196, 0.2) !important;
     }
 
     &:hover {
