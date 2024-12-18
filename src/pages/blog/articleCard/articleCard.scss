@@ -1,0 +1,104 @@
+.article-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.article-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    transition: all 0.2s ease;
+    position: relative;
+
+    .article-category {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        color: #4299e1;
+        font-weight: 500;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(66, 153, 225, 0.3);
+        border-radius: 20px;
+        z-index: 1;
+
+        &:hover {
+            background-color: rgba(66, 153, 225, 0.05);
+            border-color: rgba(66, 153, 225, 0.5);
+        }
+    }
+
+    .article-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: #718096;
+        align-items: center;
+
+        .article-date, .article-read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+    }
+
+    &:hover {
+        border-color: #4299e1;
+        
+        .article-title {
+            color: #4299e1;
+        }
+    }
+
+    .article-meta,
+    .article-title,
+    .article-description,
+    .article-tags {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .article-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: -0.02em;
+    }
+
+    .article-description {
+        color: #4a5568;
+        line-height: 1.6;
+        margin: 0 0 1rem 0;
+    }
+
+    .article-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background-color: #EDF2F7;
+            color: #4A5568;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #E2E8F0;
+                color: #2D3748;
+            }
+        }
+    }
+} 

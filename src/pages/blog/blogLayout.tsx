@@ -1,7 +1,10 @@
 import CategoryBox from "./category/categoryBox";
 import './blogLayout.scss';
+import { usePageTitle } from "../../hooks/usePageTitle.ts";
 
 const BlogLayout: React.FC<{ contentNode: React.ReactNode }> = ({ contentNode }) => {
+    usePageTitle("Blog");
+
     const categoryGroups: CategoryGroupProps[] = [
         {
             id: 1,

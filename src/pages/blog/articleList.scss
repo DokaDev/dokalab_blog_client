@@ -1,0 +1,55 @@
+.article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .category-header {
+        padding: 0 1rem 2rem 1rem;
+        border-bottom: 1px solid #E2E8F0;
+        
+        .category-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2D3748;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            position: relative;
+            display: inline-block;
+            
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0.2rem;
+                width: 100%;
+                height: 0.4rem;
+                background-color: rgba(66, 153, 225, 0.15);
+                z-index: -1;
+            }
+        }
+
+        .category-description {
+            font-size: 1.1rem;
+            color: #4A5568;
+            margin-top: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .post-count {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #718096;
+            padding: 0.3rem 0.8rem;
+            background-color: #EDF2F7;
+            border-radius: 9999px;
+        }
+    }
+
+    .articles-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1rem;
+    }
+} 

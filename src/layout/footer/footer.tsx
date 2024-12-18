@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                 <div className="footer-right">
                     <div className="site-links">
                         <a href="/about">About</a>
-                        <a href="/posts">Blog</a>
+                        <a href="/blog">Blog</a>
                         <a href="/projects">Projects</a>
                         <a href="/contact">Contact</a>
                     </div>
