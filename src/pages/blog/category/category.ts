@@ -11,4 +11,5 @@ interface CategoryProps {
     name: string;
     description: string;
     postCount: number;
+    className?: string;
 }

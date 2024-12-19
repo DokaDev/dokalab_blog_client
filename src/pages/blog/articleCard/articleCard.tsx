@@ -32,7 +32,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
                         className="article-category"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {category.name}
+                        <span className="group-name">{category.group.name}</span>
+                        <span className="separator">{'>'}</span>
+                        <span className="category-name">{category.name}</span>
                     </Link>
                 )}
                 <div className="article-meta">

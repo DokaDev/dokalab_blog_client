@@ -14,4 +14,8 @@ export interface CategoryProps {
 export interface ArticleCategoryProps {
     id: number;
     name: string;
+    group: {
+        id: number;
+        name: string;
+    }
 } 

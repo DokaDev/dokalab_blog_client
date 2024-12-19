@@ -17,7 +17,6 @@
         position: absolute;
         top: 1.5rem;
         right: 1.5rem;
-        color: #4299e1;
         font-weight: 500;
         padding: 0.3rem 0.8rem;
         font-size: 0.8rem;
@@ -26,10 +25,34 @@
         border: 1px solid rgba(66, 153, 225, 0.3);
         border-radius: 20px;
         z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+
+        .group-name {
+            color: #718096;
+        }
+
+        .separator {
+            color: #CBD5E0;
+            margin: 0 -0.1rem;
+        }
+
+        .category-name {
+            color: #4299e1;
+        }
 
         &:hover {
             background-color: rgba(66, 153, 225, 0.05);
             border-color: rgba(66, 153, 225, 0.5);
+
+            .group-name {
+                color: #4A5568;
+            }
+
+            .category-name {
+                color: #3182CE;
+            }
         }
     }
 
