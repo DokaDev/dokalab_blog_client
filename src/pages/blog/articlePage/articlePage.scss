@@ -1,7 +1,7 @@
 .article-page {
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 0rem 1rem;
 
     .article-header {
         margin-bottom: 2rem;
@@ -98,16 +98,12 @@
             opacity: 0.7;
         }
 
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin: 2.5rem 0 1.5rem;
-            letter-spacing: -0.02em;
+        > p:first-of-type {
+            margin-top: 0;
         }
 
         p {
-            margin: 1.5rem 0;
+            margin: 0.5rem 0;
         }
 
         ul, ol {
@@ -119,25 +115,100 @@
             }
         }
 
+        .code-block-container {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+
+            .code-block-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #f8fafc;
+                padding: 0.5rem 1rem;
+                border-bottom: 1px solid #e2e8f0;
+
+                .window-controls {
+                    display: flex;
+                    gap: 0.5rem;
+
+                    .control {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        
+                        &.close {
+                            background-color: #ff5f56;
+                        }
+                        
+                        &.minimize {
+                            background-color: #ffbd2e;
+                        }
+                        
+                        &.maximize {
+                            background-color: #27c93f;
+                        }
+                    }
+                }
+
+                .language-label {
+                    font-size: 0.8rem;
+                    color: #64748b;
+                    font-family: 'Fira Code', monospace;
+                    text-transform: uppercase;
+                }
+            }
+
+            pre {
+                margin: 0 !important;
+                padding: 1rem !important;
+                border: none !important;
+                border-radius: 0 !important;
+                font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+
+                code {
+                    white-space: pre !important;
+                    word-spacing: normal !important;
+                    word-break: normal !important;
+                    tab-size: 4 !important;
+                    padding: 0 !important;
+                    line-height: 1.7 !important;
+                }
+
+                .react-syntax-highlighter-line {
+                    line-height: 1.7 !important;
+                }
+            }
+
+            .react-syntax-highlighter-line-number {
+                min-width: 2.5em !important;
+                padding-right: 1em !important;
+                text-align: right !important;
+                -webkit-user-select: none !important;
+                user-select: none !important;
+                color: #a0aec0 !important;
+                opacity: 0.7 !important;
+            }
+        }
+
         code {
-            background-color: #f7fafc;
+            // background-color: #f1f5f9;
+            color: #334155;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.9em;
+            font-size: 13px;
         }
 
-        pre {
-            background-color: #f7fafc;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-
-            code {
-                background-color: transparent;
-                padding: 0;
-            }
+        > pre {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: none !important;
+            border: none !important;
+            border-radius: 0 !important;
         }
 
         blockquote {
