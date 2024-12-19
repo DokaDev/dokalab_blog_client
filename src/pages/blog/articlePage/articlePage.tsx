@@ -9,10 +9,10 @@ import {
     vs,
     xcode,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { CodeProps } from 'react-markdown/lib/ast-to-react';
 import remarkGfm from "remark-gfm";
 import remarkEmoji from 'remark-emoji';
 import { useState } from 'react';
+import type { Components } from 'react-markdown';
 
 interface ArticlePageProps {
     id: number;
@@ -296,7 +296,7 @@ export default function DynamicComponent() {
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm, remarkEmoji]}
                     components={{
-                        code({ node, inline, className, children, ...props }: CodeProps) {
+                        code({ node, inline, className, children, ...props }: Components['code']) {
                             const [copied, setCopied] = useState(false);
 
                             const handleCopy = () => {
