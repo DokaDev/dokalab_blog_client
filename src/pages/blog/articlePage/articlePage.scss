@@ -128,9 +128,19 @@
                 justify-content: space-between;
                 align-items: center;
                 background-color: #f8fafc;
-                padding: 0.5rem 1rem;
+                padding: 0.8rem 1rem;
+                height: 15px;
                 border-bottom: 1px solid #e2e8f0;
 
+                // 파일명이나 언어가 없는 경우에만 높이 조정
+                &.no-language-file {
+                    padding: 0.8rem 1rem;
+                    
+                    .header-content {
+                        min-height: 1.5rem;
+                    }
+                }
+                
                 .window-controls {
                     display: flex;
                     gap: 0.5rem;
@@ -154,11 +164,27 @@
                     }
                 }
 
-                .language-label {
-                    font-size: 0.8rem;
-                    color: #64748b;
-                    font-family: 'Fira Code', monospace;
-                    text-transform: uppercase;
+                .header-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+
+                    .file-name {
+                        font-size: 0.85rem;
+                        color: #1a202c;
+                        font-family: 'Fira Code', monospace;
+                    }
+
+                    .language-label {
+                        font-size: 0.8rem;
+                        color: #64748b;
+                        font-family: 'Fira Code', monospace;
+                        text-transform: uppercase;
+                        &:not(:first-child) {
+                            padding-left: 1rem;
+                            border-left: 1px solid #e2e8f0;
+                        }
+                    }
                 }
             }
 
@@ -195,20 +221,21 @@
         }
 
         code {
-            // background-color: #f1f5f9;
+            background-color: #f8fafc;
             color: #334155;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
             font-family: 'Fira Code', monospace;
-            font-size: 13px;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            margin: 0 0.2rem;
         }
 
-        > pre {
-            margin: 0 !important;
-            padding: 0 !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
         }
 
         blockquote {
@@ -217,6 +244,55 @@
             padding: 0.5rem 0 0.5rem 1.5rem;
             color: #718096;
             font-style: italic;
+        }
+
+        // 테이블 스타일링 추가
+        table {
+            min-width: 50%;
+            width: auto;
+            max-width: 100%;
+            margin: 2rem 0;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: white;
+            
+            thead {
+                border-bottom: 2px solid #e2e8f0;
+                
+                th {
+                    padding: 1rem 2rem;
+                    font-weight: 600;
+                    color: #1a202c;
+                    font-size: 0.9rem;
+                    text-align: left;
+                    background-color: #f8fafc;
+                    white-space: nowrap;
+                }
+            }
+            
+            tbody {
+                tr {
+                    border-bottom: 1px solid #e2e8f0;
+                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    
+                    td {
+                        padding: 1rem 2rem;
+                        color: #4a5568;
+                    }
+                }
+            }
+
+            // 반응형 처리
+            @media (max-width: 640px) {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
         }
     }
 
