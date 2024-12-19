@@ -186,6 +186,39 @@
                         }
                     }
                 }
+
+                .header-left {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+
+                    .copy-button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: none;
+                        border: none;
+                        padding: 0.4rem;
+                        color: #64748b;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        transition: all 0.2s ease;
+
+                        &:hover {
+                            background-color: #e2e8f0;
+                            color: #1a202c;
+                        }
+
+                        &.copied {
+                            color: #10b981;
+                            background-color: #ecfdf5;
+                        }
+
+                        svg {
+                            display: block;
+                        }
+                    }
+                }
             }
 
             pre {

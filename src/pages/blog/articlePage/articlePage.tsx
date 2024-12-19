@@ -12,6 +12,7 @@ import {
 import { CodeProps } from 'react-markdown/lib/ast-to-react';
 import remarkGfm from "remark-gfm";
 import remarkEmoji from 'remark-emoji';
+import { useState } from 'react';
 
 interface ArticlePageProps {
     id: number;
@@ -296,6 +297,16 @@ export default function DynamicComponent() {
                     remarkPlugins={[remarkGfm, remarkEmoji]}
                     components={{
                         code({ node, inline, className, children, ...props }: CodeProps) {
+                            const [copied, setCopied] = useState(false);
+
+                            const handleCopy = () => {
+                                navigator.clipboard.writeText(String(children).trim())
+                                    .then(() => {
+                                        setCopied(true);
+                                        setTimeout(() => setCopied(false), 2000);
+                                    });
+                            };
+
                             const isCodeBlock = !inline && (className || (!className && node?.position));
                             const match = className ? /language-(\w+)(?::(.+))?/.exec(className) : null;
                             const fileOnlyMatch = className ? /language-:(.+)/.exec(className) : null;
@@ -303,10 +314,28 @@ export default function DynamicComponent() {
                             return isCodeBlock ? (
                                 <div className="code-block-container">
                                     <div className={`code-block-header ${(!match && !fileOnlyMatch) ? 'no-language-file' : ''}`}>
-                                        <div className="window-controls">
-                                            <span className="control close"></span>
-                                            <span className="control minimize"></span>
-                                            <span className="control maximize"></span>
+                                        <div className="header-left">
+                                            <div className="window-controls">
+                                                <span className="control close"></span>
+                                                <span className="control minimize"></span>
+                                                <span className="control maximize"></span>
+                                            </div>
+                                            <button 
+                                                className={`copy-button ${copied ? 'copied' : ''}`}
+                                                onClick={handleCopy}
+                                                title="Copy code"
+                                            >
+                                                {copied ? (
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                    </svg>
+                                                ) : (
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                    </svg>
+                                                )}
+                                            </button>
                                         </div>
                                         <div className="header-content">
                                             {(match?.[2] || fileOnlyMatch?.[1]) && (
