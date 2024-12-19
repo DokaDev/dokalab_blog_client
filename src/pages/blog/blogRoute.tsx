@@ -1,4 +1,5 @@
 import ArticleList from "./articleList";
+import ArticlePage from "./articlePage/articlePage";
 import { BrowserRouter as Router, Route, Routes, Navigate, useParams } from "react-router-dom";
 import BlogLayout from "./blogLayout";
 
@@ -17,6 +18,7 @@ const BlogRoute: React.FC = () => {
                     <Route path="/category/:id" element={<ArticleList type="category" />} />
                     <Route path="/tag/:id" element={<ArticleList type="tag" />} />
                     <Route path="/search" element={<ArticleList type="search" />} />
+                    <Route path="/article/:id" element={<ArticlePage />} />
                     <Route path="/:id" element={<CategoryRedirect />} />
                 </Routes>
             }

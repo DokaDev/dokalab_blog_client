@@ -143,6 +143,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ type }) => {
                         className="search-type"
                         value={selectedSearchType}
                         onChange={(e) => setSelectedSearchType(e.target.value)}
+                        aria-label="Search type"
                     >
                         <option value="title">Title</option>
                         <option value="content">Content</option>

@@ -15,7 +15,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
 
     return (
         <form className="search-section" onSubmit={handleSubmit}>
-            <select defaultValue="title">
+            <select defaultValue="title" aria-label="Search type">
                 <option value="content">Content</option>
                 <option value="title">Title</option>
                 <option value="both">Title & Content</option>

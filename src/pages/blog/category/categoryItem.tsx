@@ -2,12 +2,17 @@ import { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import './categoryItem.scss';
 
-const CategoryItem: React.FC<CategoryProps> = ({ 
+interface CategoryItemProps extends CategoryProps {
+    isActive?: boolean;
+}
+
+const CategoryItem: React.FC<CategoryItemProps> = ({ 
     id, 
     name, 
     description, 
     postCount,
-    className 
+    className,
+    isActive
 }) => {
     const [showTooltip, setShowTooltip] = useState(false);
     const timerRef = useRef<number>();
@@ -32,8 +37,8 @@ const CategoryItem: React.FC<CategoryProps> = ({
         <NavLink 
             to={linkPath}
             end={id === 0}
-            className={({ isActive }) => 
-                `category-item ${className || ''} ${isActive ? 'active' : ''}`
+            className={({ isActive: isNavActive }) => 
+                `category-item ${className || ''} ${(isActive || isNavActive) ? 'active' : ''}`
             }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
