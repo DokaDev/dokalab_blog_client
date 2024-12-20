@@ -20,6 +20,7 @@ import { HiLightBulb } from "react-icons/hi";
 import { IoInformationCircle } from "react-icons/io5";
 import { BiSolidError } from "react-icons/bi";
 import { MdDangerous } from "react-icons/md";
+import { HiDownload } from "react-icons/hi";
 
 interface ArticlePageProps {
     id: number;
@@ -295,7 +296,17 @@ complex data structures.
 
 :::danger
 Never expose your API keys in client-side code!
-:::`,
+:::
+
+## Download Examples
+
+[!download React Query Example Project](https://example.com/react-query-example.zip)
+
+[:download Complete Source Code](https://example.com/source-code.zip)
+
+일반 링크는 이렇게 보입니다: [React Query Documentation](https://tanstack.com/query/latest)
+
+`,
         date: "2024-03-20",
         readTime: "8 min read",
         category: {
@@ -479,6 +490,34 @@ Never expose your API keys in client-side code!
                                 <div className="callout-content">{children}</div>
                             </div>
                         ),
+                        a: ({ node, children, href, ...props }) => {
+                            // 텍스트 컨텐츠 확인
+                            const text = String(children);
+                            
+                            // 다운로드 링크 패턴 확인 (!download로 시작하는 패턴만 체크)
+                            const downloadMatch = text.match(/^!download\s+(.+)$/);
+                            
+                            if (downloadMatch) {
+                                return (
+                                    <a 
+                                        href={href} 
+                                        className="download-link" 
+                                        download 
+                                        {...props}
+                                    >
+                                        <HiDownload className="download-icon" />
+                                        <span>{downloadMatch[1]}</span>
+                                    </a>
+                                );
+                            }
+                            
+                            // 일반 링크는 기본 스타일로 렌더링
+                            return (
+                                <a href={href} {...props}>
+                                    {children}
+                                </a>
+                            );
+                        },
                     }}>
                     {article.content}
                 </ReactMarkdown>
