@@ -21,6 +21,7 @@ import { IoInformationCircle } from "react-icons/io5";
 import { BiSolidError } from "react-icons/bi";
 import { MdDangerous } from "react-icons/md";
 import { HiDownload } from "react-icons/hi";
+import { HiDocument } from "react-icons/hi";
 
 interface ArticlePageProps {
     id: number;
@@ -298,13 +299,85 @@ complex data structures.
 Never expose your API keys in client-side code!
 :::
 
+## Documentation Links
+
+[!docs React Query API Reference](https://tanstack.com/query/latest/docs/react/reference)
+[!docs TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+
 ## Download Examples
 
 [!download React Query Example Project](https://example.com/react-query-example.zip)
 
-[:download Complete Source Code](https://example.com/source-code.zip)
+Basic Link is like this: [React Query Documentation](https://tanstack.com/query/latest)
 
-일반 링크는 이렇게 보입니다: [React Query Documentation](https://tanstack.com/query/latest)
+## User Examples
+[!user GitHub Profile](https://github.com/username)
+[!user Twitter](https://twitter.com/username)
+[!user LinkedIn](https://linkedin.com/in/username)
+[!user Instagram](https://instagram.com/username)
+
+[!user Facebook](https://facebook.com/username)
+[!user YouTube](https://youtube.com/username)
+[!user TikTok](https://tiktok.com/username)
+[!user Pinterest](https://pinterest.com/username)
+
+## Header Examples
+
+# H1
+
+## H2
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+## Image Examples
+
+### Basic Image
+![AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+### Size Options
+Small Image (300px):
+![!width=300 AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Medium Image (500px):
+![!width=500 AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+### Shadow Effect
+With Shadow Effect:
+![!shadow AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+### Alignment Options
+Left Aligned (300px):
+![!align=left !width=300 Left Aligned Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+This text appears below the image, not on its right side.
+
+Center Aligned (500px):
+![!align=center !width=500 Center Aligned Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Right Aligned (300px):
+![!align=right !width=300 Right Aligned Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+### Combined Options
+Shadow + Left Align (400px):
+![!shadow !align=left !width=400 Shadow with Left Alignment](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Shadow + Center Align (600px):
+![!shadow !align=center !width=600 Shadow with Center Alignment](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Shadow + Right Align (400px):
+![!shadow !align=right !width=400 Shadow with Right Alignment](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Caption Hidden (300px):
+![!width=300 !nocap AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
+
+Multiple Options with Hidden Caption:
+![!shadow !align=center !width=500 !nocap AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
 
 `,
         date: "2024-03-20",
@@ -366,7 +439,7 @@ Never expose your API keys in client-side code!
                         remarkDirectiveProcessor
                     ]}
                     components={{
-                        code({ node, inline, className, children, ...props }) {
+                        code({node, inline, className, children, ...props}) {
                             // 코드 블록인지 확인하는 정확한 방법
                             const isCodeBlock = node?.position?.start?.line !== node?.position?.end?.line || className?.includes('language-');
                             
@@ -458,7 +531,7 @@ Never expose your API keys in client-side code!
                                 </div>
                             );
                         },
-                        tip: ({ node, children, className, ...props }) => (
+                        tip: ({node, children, className, ...props}) => (
                             <div className={`callout ${className}`} {...props}>
                                 <div className="callout-icon">
                                     <HiLightBulb size={20} />
@@ -466,7 +539,7 @@ Never expose your API keys in client-side code!
                                 <div className="callout-content">{children}</div>
                             </div>
                         ),
-                        info: ({ node, children, className, ...props }) => (
+                        info: ({node, children, className, ...props}) => (
                             <div className={`callout ${className}`} {...props}>
                                 <div className="callout-icon">
                                     <IoInformationCircle size={20} />
@@ -474,7 +547,7 @@ Never expose your API keys in client-side code!
                                 <div className="callout-content">{children}</div>
                             </div>
                         ),
-                        warning: ({ node, children, className, ...props }) => (
+                        warning: ({node, children, className, ...props}) => (
                             <div className={`callout ${className}`} {...props}>
                                 <div className="callout-icon">
                                     <BiSolidError size={20} />
@@ -482,7 +555,7 @@ Never expose your API keys in client-side code!
                                 <div className="callout-content">{children}</div>
                             </div>
                         ),
-                        danger: ({ node, children, className, ...props }) => (
+                        danger: ({node, children, className, ...props}) => (
                             <div className={`callout ${className}`} {...props}>
                                 <div className="callout-icon">
                                     <MdDangerous size={20} />
@@ -490,12 +563,12 @@ Never expose your API keys in client-side code!
                                 <div className="callout-content">{children}</div>
                             </div>
                         ),
-                        a: ({ node, children, href, ...props }) => {
-                            // 텍스트 컨텐츠 확인
+                        a: ({node, children, href, ...props}) => {
                             const text = String(children);
                             
-                            // 다운로드 링크 패턴 확인 (!download로 시작하는 패턴만 체크)
                             const downloadMatch = text.match(/^!download\s+(.+)$/);
+                            const docsMatch = text.match(/^!docs\s+(.+)$/);
+                            const userMatch = text.match(/^!user\s+(.+)$/);
                             
                             if (downloadMatch) {
                                 return (
@@ -510,14 +583,91 @@ Never expose your API keys in client-side code!
                                     </a>
                                 );
                             }
+
+                            if (docsMatch) {
+                                return (
+                                    <a 
+                                        href={href} 
+                                        className="docs-link" 
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        {...props}
+                                    >
+                                        <HiDocument className="docs-icon" />
+                                        <span>{docsMatch[1]}</span>
+                                    </a>
+                                );
+                            }
+
+                            if (userMatch && href) {
+                                // URL에서 도메인 추출
+                                let domain;
+                                try {
+                                    domain = new URL(href).hostname;
+                                } catch (e) {
+                                    domain = href;
+                                }
+
+                                return (
+                                    <a 
+                                        href={href} 
+                                        className="user-link" 
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        {...props}
+                                    >
+                                        <img 
+                                            src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+                                            alt=""
+                                            className="favicon-icon"
+                                        />
+                                        <span>{userMatch[1]}</span>
+                                    </a>
+                                );
+                            }
                             
-                            // 일반 링크는 기본 스타일로 렌더링
                             return (
                                 <a href={href} {...props}>
                                     {children}
                                 </a>
                             );
                         },
+                        img: ({node, ...props}) => {
+                            const altText = props.alt || '';
+                            
+                            // 옵션들 확인
+                            const widthMatch = altText.match(/!width=(\d+)\s*/);
+                            const hasShadow = altText.includes('!shadow');
+                            const alignMatch = altText.match(/!align=(left|center|right)\s*/);
+                            const hideCaption = altText.includes('!nocap');  // noshow -> nocap으로 변경
+                            
+                            // 실제 alt 텍스트 추출 (모든 옵션 제거)
+                            const cleanAltText = altText
+                                .replace(/!width=\d+\s*/, '')
+                                .replace(/!align=(left|center|right)\s*/, '')
+                                .replace('!shadow', '')
+                                .replace('!nocap', '')  // noshow -> nocap으로 변경
+                                .trim();
+                            
+                            const image = (
+                                <img
+                                    {...props}
+                                    alt={cleanAltText}
+                                    className={`${hasShadow ? 'shadow' : ''} ${alignMatch ? `align-${alignMatch[1]}` : ''}`}
+                                    style={{
+                                        ...(widthMatch && { width: `${widthMatch[1]}px` })
+                                    }}
+                                />
+                            );
+
+                            // hideCaption이 true면 캡션을 표시하지 않음
+                            return cleanAltText && !hideCaption ? (
+                                <div className={`image-container ${alignMatch ? `align-${alignMatch[1]}` : ''}`}>
+                                    {image}
+                                    <div className="image-caption">{cleanAltText}</div>
+                                </div>
+                            ) : image;
+                        }
                     }}>
                     {article.content}
                 </ReactMarkdown>

@@ -447,13 +447,13 @@
         }
 
         // 일반 링크 스타일 수정
-        a:not(.download-link) {
+        a:not(.download-link):not(.docs-link):not(.user-link):not(:has(img)) {
             color: #4b5563;
             text-decoration: none;
             font-weight: 500;
             padding: 0.1em 0;
-            position: relative;  // 가상 요소 위치 기준점
-            transition: color 0.3s ease;  // 글자색 변화에 대한 transition 추가
+            position: relative;
+            transition: color 0.3s ease;
 
             &::after {
                 content: '';
@@ -462,9 +462,9 @@
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: rgba(147, 197, 253, 0.3);  // 파스텔 블루
-                transform: scaleX(0);  // 처음에는 안 보이게
-                transform-origin: left;  // 왼쪽에서 시작
+                background: rgba(147, 197, 253, 0.3);
+                transform: scaleX(0);
+                transform-origin: left;
                 transition: transform 0.3s ease, background 0.3s ease;
             }
 
@@ -472,8 +472,8 @@
                 color: #1e293b;
 
                 &::after {
-                    transform: scaleX(1);  // 전체 너비로 확장
-                    background: rgba(147, 197, 253, 0.5);  // hover시 좀 더 진한 파스텔 블루
+                    transform: scaleX(1);
+                    background: rgba(147, 197, 253, 0.5);
                 }
             }
 
@@ -481,13 +481,169 @@
                 color: #0f172a;
             }
 
-            // 인라인 코드를 포함한 링크 처리
+            // 인라인 코드를 한 링크 처리
             code {
                 color: inherit;
                 background: none;
                 border: none;
                 padding: 0;
                 font-weight: inherit;
+            }
+        }
+
+        // 이미지 링크는 기본 스타일만
+        a:has(img) {
+            text-decoration: none;
+        }
+
+        .docs-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background-color: #f8fafc;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+
+            .docs-icon {
+                width: 1.1rem;
+                height: 1.1rem;
+                color: #64748b;  // 다운로드 버튼과 동일한 회색으로 변경
+                transition: color 0.2s ease;
+            }
+
+            &:hover {
+                background-color: #f1f5f9;
+                border-color: #cbd5e0;
+                color: #334155;
+
+                .docs-icon {
+                    color: #475569;  // hover시 다운로드 버튼과 동일한 한 회색
+                }
+            }
+
+            span {
+                line-height: 1;
+            }
+        }
+
+        .user-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background-color: #f8fafc;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+
+            .favicon-icon {
+                width: 1.1rem;
+                height: 1.1rem;
+                object-fit: contain;
+                transition: opacity 0.2s ease;  // 파비콘도 transition 효과 추가
+            }
+
+            &:hover {
+                background-color: #f1f5f9;
+                border-color: #cbd5e0;
+                color: #334155;
+
+                .favicon-icon {
+                    opacity: 0.8;  // hover시 살짝 투명도 조정
+                }
+            }
+
+            span {
+                line-height: 1;
+            }
+        }
+
+        // 크리스트 스타일링
+        ul {
+            li {
+                &:has(input[type="checkbox"]) {
+                    list-style: none;
+                    margin-left: -1.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    // 체스텀 체크박스 스타일링
+                    input[type="checkbox"] {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 1rem;
+                        height: 1rem;
+                        border: 2px solid #e2e8f0;
+                        border-radius: 4px;
+                        margin: 0;
+                        cursor: default;
+                        position: relative;
+                        background-color: #fff;
+                        transition: all 0.2s ease;
+
+                        &:checked {
+                            background-color: #fda4af;
+                            border-color: #fda4af;
+
+                            &::after {
+                                content: '';
+                                position: absolute;
+                                left: 3px;
+                                top: 0px;
+                                width: 4px;
+                                height: 8px;
+                                border: solid white;
+                                border-width: 0 2px 2px 0;
+                                transform: rotate(45deg);
+                            }
+                        }
+
+                        &:hover {
+                            border-color: #fda4af;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 이미지 기본 스타일
+        img:not(.favicon-icon):not(.user-avatar) {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            
+            &.shadow {
+                box-shadow: 
+                    0 10px 15px -5px rgba(0, 0, 0, 0.15),   // 그림자 크기와 투명도 더 줄임
+                    0 4px 6px -3px rgba(0, 0, 0, 0.1);      // 가까운 그림자도 더 부드럽게
+            }
+        }
+
+        // 이미지 컨테이너 (캡션이 있는 경우)
+        .image-container {
+            margin: 1.5rem 0;
+            text-align: center;
+
+            img:not(.favicon-icon):not(.user-avatar) {
+                margin: 0 0 0.1rem 0;  // 0.15rem -> 0.1rem
+            }
+
+            .image-caption {
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin-top: 0.1rem;  // 0.15rem -> 0.1rem
             }
         }
     }
@@ -505,5 +661,32 @@
         .article-content {
             font-size: 1rem;
         }
+    }
+
+    // 이미지 정렬 스타일
+    .image-container, img:not(.favicon-icon):not(.user-avatar) {
+        &.align-left {
+            margin: 1.5rem auto 1.5rem 0;
+        }
+
+        &.align-center {
+            margin: 1.5rem auto;
+        }
+
+        &.align-right {
+            margin: 1.5rem 0 1.5rem auto;
+        }
+    }
+
+    // 이미지 컨테이너는 항상 block으로 처리하여 텍스트와 분리
+    .image-container {
+        display: block;
+        width: fit-content;
+    }
+
+    // 단독 이미지 (캡션 없는 경우)
+    img:not(.favicon-icon):not(.user-avatar):not(.image-container img) {
+        display: block;
+        margin: 1.5rem 0;
     }
 } 
