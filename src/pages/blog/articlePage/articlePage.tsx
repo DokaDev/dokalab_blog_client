@@ -12,7 +12,7 @@ import {
 import remarkGfm from "remark-gfm";
 import remarkEmoji from 'remark-emoji';
 import remarkDirective from 'remark-directive';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Components } from 'react-markdown';
 import { visit } from 'unist-util-visit';
 import { h } from 'hastscript';
@@ -22,6 +22,10 @@ import { BiSolidError } from "react-icons/bi";
 import { MdDangerous } from "react-icons/md";
 import { HiDownload } from "react-icons/hi";
 import { HiDocument } from "react-icons/hi";
+import 'katex/dist/katex.min.css';  // KaTeX CSS
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import mermaid from 'mermaid';  // 상단에 import 추가
 
 interface ArticlePageProps {
     id: number;
@@ -32,6 +36,13 @@ interface ArticlePageProps {
     category: ArticleCategoryProps;
     tags: TagProps[];
 }
+
+// mermaid 초기 설정
+mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    securityLevel: 'loose',
+});
 
 // 커스텀 directive 기 추가
 function remarkDirectiveProcessor() {
@@ -275,7 +286,7 @@ export default function DynamicComponent() {
 \`\`\`
 
 ---
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=1000&width=435&lines=%F0%9F%9A%80+Building+the+Future%2C+One+Line+at+a+Time!+%F0%9F%92%BB;%F0%9F%94%A7+Turning+Ideas+into+Reality+with+Code+%E2%9C%8D%F0%9F%8F%BB;%F0%9F%A5%83+Developer+by+Day%2C+Whiskey+Lover+by+Night+%F0%9F%8C%99;%F0%9F%96%A5%EF%B8%8F+Beyond+Frameworks%3A+Mastering+the+Core+%F0%9F%9B%A1%EF%B8%8F)](https://git.io/typing-svg)
+[![!nocap !align=center Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=1000&width=435&lines=%F0%9F%9A%80+Building+the+Future%2C+One+Line+at+a+Time!+%F0%9F%92%BB;%F0%9F%94%A7+Turning+Ideas+into+Reality+with+Code+%E2%9C%8D%F0%9F%8F%BB;%F0%9F%A5%83+Developer+by+Day%2C+Whiskey+Lover+by+Night+%F0%9F%8C%99;%F0%9F%96%A5%EF%B8%8F+Beyond+Frameworks%3A+Mastering+the+Core+%F0%9F%9B%A1%EF%B8%8F)](https://git.io/typing-svg)
 
 *Code block test cases added: March 21, 2024*
 
@@ -379,6 +390,216 @@ Caption Hidden (300px):
 Multiple Options with Hidden Caption:
 ![!shadow !align=center !width=500 !nocap AI Times Image](https://cdn.aitimes.kr/news/photo/202305/28000_42202_5649.jpg)
 
+### Additional Image Test(Transparent Background)
+
+Basic Image: 
+![AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Center Aligned Image(500px):
+![!align=center !width=500 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Left Aligned Image(300px):
+![!align=left !width=300 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Right Aligned Image(300px):
+![!align=right !width=300 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Shadow Effect:
+![!shadow AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Shadow + Left Align (400px):
+![!shadow !align=left !width=400 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Shadow + Center Align (600px):
+![!shadow !align=center !width=600 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+Shadow + Right Align (400px):
+![!shadow !align=right !width=400 AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+No Caption:
+![!width=300 !nocap AI Times Image](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Google_Photos_icon_%282020%29.svg/1200px-Google_Photos_icon_%282020%29.svg.png)
+
+## LaTeX Math Examples
+
+### Inline Math
+Einstein's famous equation: $E = mc^2$ shows the relationship between mass and energy.
+
+The quadratic formula $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ solves ax² + bx + c = 0.
+
+When $n \\to \\infty$, the sequence converges.
+
+### Block Math
+The Pythagorean theorem is represented as:
+
+$$a^2 + b^2 = c^2$$
+
+Maxwell's Equations in differential form:
+
+$$
+\\begin{align*}
+\\nabla \\cdot \\mathbf{E} &= \\frac{\\rho}{\\epsilon_0} \\\\
+\\nabla \\cdot \\mathbf{B} &= 0 \\\\
+\\nabla \\times \\mathbf{E} &= -\\frac{\\partial \\mathbf{B}}{\\partial t} \\\\
+\\nabla \\times \\mathbf{B} &= \\mu_0\\mathbf{J} + \\mu_0\\epsilon_0\\frac{\\partial \\mathbf{E}}{\\partial t}
+\\end{align*}
+$$
+
+The Euler's identity:
+
+$$e^{i\\pi} + 1 = 0$$
+
+The probability density function of a normal distribution:
+
+$$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$$
+
+### Complex Math Examples
+
+The Fourier Transform:
+
+$$F(\\omega) = \\int_{-\\infty}^{\\infty} f(t)e^{-i\\omega t}dt$$
+
+Schrödinger's Equation:
+
+$$i\\hbar\\frac{\\partial}{\\partial t}\\Psi(\\mathbf{r},t) = \\left[-\\frac{\\hbar^2}{2m}\\nabla^2 + V(\\mathbf{r},t)\\right]\\Psi(\\mathbf{r},t)$$
+
+## Mermaid Diagram Examples
+
+### Basic Flowchart
+\`\`\`mermaid
+graph TD
+    A[Start] --> B{Is it?}
+    B -- Yes --> C[OK]
+    C --> D[Rethink]
+    D --> B
+    B -- No ----> E[End]
+\`\`\`
+
+### Same Flowchart (Code View)
+\`\`\`mermaid:!code
+graph TD
+    A[Start] --> B{Is it?}
+    B -- Yes --> C[OK]
+    C --> D[Rethink]
+    D --> B
+    B -- No ----> E[End]
+\`\`\`
+
+### Sequence Diagram
+\`\`\`mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant DB
+    
+    Client->>API: GET /users
+    API->>DB: Select Query
+    DB-->>API: Return Users
+    API-->>Client: 200 OK with Users
+    
+    Note over Client,API: Authentication Flow
+    Client->>API: POST /login
+    API-->>Client: JWT Token
+\`\`\`
+
+### Entity Relationship Diagram
+\`\`\`mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+\`\`\`
+
+### Gantt Chart
+\`\`\`mermaid
+gantt
+    title Project Timeline
+    dateFormat  YYYY-MM-DD
+    section Planning
+    Requirements    :a1, 2024-01-01, 30d
+    Design         :after a1, 20d
+    section Development
+    Coding         :2024-02-20, 45d
+    Testing        :2024-03-15, 30d
+\`\`\`
+
+### Pie Chart
+\`\`\`mermaid
+pie title Programming Languages
+    "JavaScript" : 40
+    "Python" : 30
+    "Java" : 20
+    "Others" : 10
+\`\`\`
+
+### Git Graph
+\`\`\`mermaid
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit
+\`\`\`
+
+### User Journey
+\`\`\`mermaid
+journey
+    title User Shopping Experience
+    section Browse
+      Find product: 5: User
+      View details: 3: User
+    section Purchase
+      Add to cart: 5: User
+      Checkout: 3: User, System
+      Payment: 3: User, System
+    section Post-Purchase
+      Order confirmation: 5: System
+      Delivery: 3: System
+\`\`\`
+
+### Complex Flowchart with Styling
+\`\`\`mermaid
+graph LR
+    A[Hard edge] -->|Link text| B(Round edge)
+    B --> C{Decision}
+    C -->|One| D[Result one]
+    C -->|Two| E[Result two]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:4px
+    style B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff
+    style C fill:#9f9,stroke:#333,stroke-width:2px
+\`\`\`
+
+### Same Complex Flowchart (Code View)
+\`\`\`mermaid:!code
+graph LR
+    A[Hard edge] -->|Link text| B(Round edge)
+    B --> C{Decision}
+    C -->|One| D[Result one]
+    C -->|Two| E[Result two]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:4px
+    style B fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff
+    style C fill:#9f9,stroke:#333,stroke-width:2px
+\`\`\`
+
+\`\`\`html:templates/mixed.html
+<div class="container">
+    <style>
+        .container { padding: 1rem; }
+    </style>
+    <script>
+        function init() {
+            console.log("Initialized");
+        }
+    </script>
+</div>
+\`\`\`
 `,
         date: "2024-03-20",
         readTime: "8 min read",
@@ -436,11 +657,14 @@ Multiple Options with Hidden Caption:
                         remarkGfm,
                         remarkEmoji,
                         remarkDirective,
-                        remarkDirectiveProcessor
+                        remarkDirectiveProcessor,
+                        remarkMath  // math plugin 추가
+                    ]}
+                    rehypePlugins={[
+                        rehypeKatex  // KaTeX plugin 추가
                     ]}
                     components={{
                         code({node, inline, className, children, ...props}) {
-                            // 코드 블록인지 확인하는 정확한 방법
                             const isCodeBlock = node?.position?.start?.line !== node?.position?.end?.line || className?.includes('language-');
                             
                             if (!isCodeBlock) {
@@ -455,6 +679,120 @@ Multiple Options with Hidden Caption:
                             const match = /language-(\w+)(?::(.+))?/.exec(className || '');
                             const fileOnlyMatch = /language-:(.+)/.exec(className || '');
 
+                            // mermaid 다이어그램 처리
+                            if (match?.[1] === 'mermaid') {
+                                const [mermaidSvg, setMermaidSvg] = useState<string>('');
+                                const showCode = match?.[2]?.includes('!code');
+                                
+                                useEffect(() => {
+                                    if (!showCode) {
+                                        const renderDiagram = async () => {
+                                            try {
+                                                const { svg } = await mermaid.render(
+                                                    'mermaid-' + Math.random().toString(36).substr(2, 9),
+                                                    String(children).trim()
+                                                );
+                                                setMermaidSvg(svg);
+                                            } catch (error) {
+                                                console.error('Mermaid rendering failed:', error);
+                                            }
+                                        };
+                                        
+                                        renderDiagram();
+                                    }
+                                }, [children, showCode]);
+
+                                if (showCode) {
+                                    // 코드 블록으로 표시할 때 showLineNumbers 추가
+                                    return (
+                                        <div className="code-block-container">
+                                            <div className="code-block-header">
+                                                <div className="header-left">
+                                                    <div className="window-controls">
+                                                        <span className="control close"></span>
+                                                        <span className="control minimize"></span>
+                                                        <span className="control maximize"></span>
+                                                    </div>
+                                                    <button 
+                                                        className={`copy-button ${copied ? 'copied' : ''}`}
+                                                        onClick={() => {
+                                                            navigator.clipboard.writeText(String(children).trim())
+                                                                .then(() => {
+                                                                    setCopied(true);
+                                                                    setTimeout(() => setCopied(false), 2000);
+                                                                });
+                                                        }}
+                                                        title="Copy code"
+                                                    >
+                                                        {copied ? (
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                                            </svg>
+                                                        ) : (
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                                <div className="header-content">
+                                                    <div className="file-name">Mermaid Source Code</div>
+                                                    <div className="language-label">mermaid</div>
+                                                </div>
+                                            </div>
+                                            <SyntaxHighlighter
+                                                style={oneLight}
+                                                language="mermaid"
+                                                showLineNumbers={true}
+                                                customStyle={{
+                                                    margin: 0,
+                                                    padding: "1.5rem",
+                                                    fontSize: "13px",
+                                                }}
+                                                wrapLines={true}
+                                                lineProps={() => ({
+                                                    style: {
+                                                        display: "block",
+                                                        width: "100%"
+                                                    }
+                                                })}
+                                                lineNumberStyle={() => ({
+                                                    minWidth: "2.5em",
+                                                    paddingRight: "1em",
+                                                    textAlign: "right",
+                                                    userSelect: "none",
+                                                    marginRight: "1em",
+                                                })}
+                                                {...props}
+                                            >
+                                                {String(children).trim()}
+                                            </SyntaxHighlighter>
+                                        </div>
+                                    );
+                                }
+
+                                // 다이어그램으로 표시
+                                return (
+                                    <div className="mermaid-diagram">
+                                        <div className="diagram-header">
+                                            <div className="window-controls">
+                                                <span className="control close"></span>
+                                                <span className="control minimize"></span>
+                                                <span className="control maximize"></span>
+                                            </div>
+                                            <div className="diagram-title">
+                                                Mermaid Diagram
+                                            </div>
+                                        </div>
+                                        <div className="diagram-content"
+                                            dangerouslySetInnerHTML={{ __html: mermaidSvg }}
+                                        />
+                                    </div>
+                                );
+                            }
+
+                            // 기존 코드 블록 처리
                             const handleCopy = () => {
                                 navigator.clipboard.writeText(String(children).trim())
                                     .then(() => {
@@ -639,14 +977,14 @@ Multiple Options with Hidden Caption:
                             const widthMatch = altText.match(/!width=(\d+)\s*/);
                             const hasShadow = altText.includes('!shadow');
                             const alignMatch = altText.match(/!align=(left|center|right)\s*/);
-                            const hideCaption = altText.includes('!nocap');  // noshow -> nocap으로 변경
+                            const hideCaption = altText.includes('!nocap');
                             
                             // 실제 alt 텍스트 추출 (모든 옵션 제거)
                             const cleanAltText = altText
                                 .replace(/!width=\d+\s*/, '')
                                 .replace(/!align=(left|center|right)\s*/, '')
                                 .replace('!shadow', '')
-                                .replace('!nocap', '')  // noshow -> nocap으로 변경
+                                .replace('!nocap', '')
                                 .trim();
                             
                             const image = (
@@ -660,13 +998,17 @@ Multiple Options with Hidden Caption:
                                 />
                             );
 
-                            // hideCaption이 true면 캡션을 표시하지 않음
+                            // 캡션이 없는 경우에도 정렬을 위해 컨테이��� 사용
                             return cleanAltText && !hideCaption ? (
                                 <div className={`image-container ${alignMatch ? `align-${alignMatch[1]}` : ''}`}>
                                     {image}
                                     <div className="image-caption">{cleanAltText}</div>
                                 </div>
-                            ) : image;
+                            ) : (
+                                <div className={`image-container ${alignMatch ? `align-${alignMatch[1]}` : ''}`}>
+                                    {image}
+                                </div>
+                            );
                         }
                     }}>
                     {article.content}
