@@ -1,0 +1,56 @@
+.admin-dashboard {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .dashboard-header {
+        margin-bottom: 2rem;
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+    }
+
+    .dashboard-content {
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+
+            .action-card {
+                background: white;
+                padding: 2rem;
+                border-radius: 0.75rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                transition: all 0.2s ease;
+                text-decoration: none;
+                cursor: pointer;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+
+                .card-icon {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                }
+
+                h2 {
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    color: #1e293b;
+                    margin: 0 0 0.5rem 0;
+                }
+
+                p {
+                    color: #64748b;
+                    margin: 0;
+                    font-size: 0.95rem;
+                }
+            }
+        }
+    }
+} 

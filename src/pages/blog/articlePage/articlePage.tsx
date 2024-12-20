@@ -1,31 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { ArticleCategoryProps, TagProps } from "../types";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "./articlePage.scss";
-import {
-    atomOneLight,
-    vs,
-    xcode,
-} from "react-syntax-highlighter/dist/esm/styles/hljs";
-import remarkGfm from "remark-gfm";
-import remarkEmoji from 'remark-emoji';
-import remarkDirective from 'remark-directive';
-import { useState, useEffect } from 'react';
-import type { Components } from 'react-markdown';
-import { visit } from 'unist-util-visit';
-import { h } from 'hastscript';
-import { HiLightBulb } from "react-icons/hi";
-import { IoInformationCircle } from "react-icons/io5";
-import { BiSolidError } from "react-icons/bi";
-import { MdDangerous } from "react-icons/md";
-import { HiDownload } from "react-icons/hi";
-import { HiDocument } from "react-icons/hi";
-import 'katex/dist/katex.min.css';  // KaTeX CSS
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import mermaid from 'mermaid';  // 상단에 import 추가
+import MarkdownRenderer from "../../../component/markdown/markdownRenderer";
 
 interface ArticlePageProps {
     id: number;
@@ -35,33 +11,6 @@ interface ArticlePageProps {
     readTime: string;
     category: ArticleCategoryProps;
     tags: TagProps[];
-}
-
-// mermaid 초기 설정
-mermaid.initialize({
-    startOnLoad: true,
-    theme: 'default',
-    securityLevel: 'loose',
-});
-
-// 커스텀 directive 기 추가
-function remarkDirectiveProcessor() {
-    return (tree) => {
-        visit(tree, (node) => {
-            if (
-                node.type === 'containerDirective' ||
-                node.type === 'leafDirective' ||
-                node.type === 'textDirective'
-            ) {
-                const data = node.data || (node.data = {});
-                data.hName = node.name;
-                data.hProperties = {
-                    ...node.attributes,
-                    className: `callout callout-${node.name}`
-                };
-            }
-        });
-    };
 }
 
 const ArticlePage: React.FC = () => {
@@ -600,6 +549,49 @@ graph LR
     </script>
 </div>
 \`\`\`
+
+### List Examples
+- Level 1
+    - Level 2
+        - Level 3
+            - Level 4
+                - Level 5
+
+### Ordered List
+1. Level 1
+2. Level 2
+3. Level 3
+4. Level 4
+5. Level 5
+
+## Collapsible Content Examples
+
+:::details{summary="Basic Example"}
+This is a basic example of collapsible content.
+You can put any markdown content here!
+
+- List items
+- More items
+:::
+
+:::details{summary="Code Example"}
+Here's some code:
+
+\`\`\`typescript
+function hello() {
+    console.log("Hello from collapsible section!");
+}
+\`\`\`
+:::
+
+:::details{summary="Nested Example"}
+You cannot nest these!
+:::warning
+**Nesting Limitation**: Currently, the details directive does not support nesting. Each details section should be used independently at the same level.
+:::
+
+
+
 `,
         date: "2024-03-20",
         readTime: "8 min read",
@@ -652,367 +644,7 @@ graph LR
                 </div>
             </header>
             <div className="article-content">
-                <ReactMarkdown
-                    remarkPlugins={[
-                        remarkGfm,
-                        remarkEmoji,
-                        remarkDirective,
-                        remarkDirectiveProcessor,
-                        remarkMath  // math plugin 추가
-                    ]}
-                    rehypePlugins={[
-                        rehypeKatex  // KaTeX plugin 추가
-                    ]}
-                    components={{
-                        code({node, inline, className, children, ...props}) {
-                            const isCodeBlock = node?.position?.start?.line !== node?.position?.end?.line || className?.includes('language-');
-                            
-                            if (!isCodeBlock) {
-                                return (
-                                    <code className={className} {...props}>
-                                        {children}
-                                    </code>
-                                );
-                            }
-
-                            const [copied, setCopied] = useState(false);
-                            const match = /language-(\w+)(?::(.+))?/.exec(className || '');
-                            const fileOnlyMatch = /language-:(.+)/.exec(className || '');
-
-                            // mermaid 다이어그램 처리
-                            if (match?.[1] === 'mermaid') {
-                                const [mermaidSvg, setMermaidSvg] = useState<string>('');
-                                const showCode = match?.[2]?.includes('!code');
-                                
-                                useEffect(() => {
-                                    if (!showCode) {
-                                        const renderDiagram = async () => {
-                                            try {
-                                                const { svg } = await mermaid.render(
-                                                    'mermaid-' + Math.random().toString(36).substr(2, 9),
-                                                    String(children).trim()
-                                                );
-                                                setMermaidSvg(svg);
-                                            } catch (error) {
-                                                console.error('Mermaid rendering failed:', error);
-                                            }
-                                        };
-                                        
-                                        renderDiagram();
-                                    }
-                                }, [children, showCode]);
-
-                                if (showCode) {
-                                    // 코드 블록으로 표시할 때 showLineNumbers 추가
-                                    return (
-                                        <div className="code-block-container">
-                                            <div className="code-block-header">
-                                                <div className="header-left">
-                                                    <div className="window-controls">
-                                                        <span className="control close"></span>
-                                                        <span className="control minimize"></span>
-                                                        <span className="control maximize"></span>
-                                                    </div>
-                                                    <button 
-                                                        className={`copy-button ${copied ? 'copied' : ''}`}
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(String(children).trim())
-                                                                .then(() => {
-                                                                    setCopied(true);
-                                                                    setTimeout(() => setCopied(false), 2000);
-                                                                });
-                                                        }}
-                                                        title="Copy code"
-                                                    >
-                                                        {copied ? (
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                                            </svg>
-                                                        ) : (
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                                            </svg>
-                                                        )}
-                                                    </button>
-                                                </div>
-                                                <div className="header-content">
-                                                    <div className="file-name">Mermaid Source Code</div>
-                                                    <div className="language-label">mermaid</div>
-                                                </div>
-                                            </div>
-                                            <SyntaxHighlighter
-                                                style={oneLight}
-                                                language="mermaid"
-                                                showLineNumbers={true}
-                                                customStyle={{
-                                                    margin: 0,
-                                                    padding: "1.5rem",
-                                                    fontSize: "13px",
-                                                }}
-                                                wrapLines={true}
-                                                lineProps={() => ({
-                                                    style: {
-                                                        display: "block",
-                                                        width: "100%"
-                                                    }
-                                                })}
-                                                lineNumberStyle={() => ({
-                                                    minWidth: "2.5em",
-                                                    paddingRight: "1em",
-                                                    textAlign: "right",
-                                                    userSelect: "none",
-                                                    marginRight: "1em",
-                                                })}
-                                                {...props}
-                                            >
-                                                {String(children).trim()}
-                                            </SyntaxHighlighter>
-                                        </div>
-                                    );
-                                }
-
-                                // 다이어그램으로 표시
-                                return (
-                                    <div className="mermaid-diagram">
-                                        <div className="diagram-header">
-                                            <div className="window-controls">
-                                                <span className="control close"></span>
-                                                <span className="control minimize"></span>
-                                                <span className="control maximize"></span>
-                                            </div>
-                                            <div className="diagram-title">
-                                                Mermaid Diagram
-                                            </div>
-                                        </div>
-                                        <div className="diagram-content"
-                                            dangerouslySetInnerHTML={{ __html: mermaidSvg }}
-                                        />
-                                    </div>
-                                );
-                            }
-
-                            // 기존 코드 블록 처리
-                            const handleCopy = () => {
-                                navigator.clipboard.writeText(String(children).trim())
-                                    .then(() => {
-                                        setCopied(true);
-                                        setTimeout(() => setCopied(false), 2000);
-                                    });
-                            };
-                            
-                            return (
-                                <div className="code-block-container">
-                                    <div className={`code-block-header ${(!match && !fileOnlyMatch) ? 'no-language-file' : ''}`}>
-                                        <div className="header-left">
-                                            <div className="window-controls">
-                                                <span className="control close"></span>
-                                                <span className="control minimize"></span>
-                                                <span className="control maximize"></span>
-                                            </div>
-                                            <button 
-                                                className={`copy-button ${copied ? 'copied' : ''}`}
-                                                onClick={handleCopy}
-                                                title="Copy code"
-                                            >
-                                                {copied ? (
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                                    </svg>
-                                                ) : (
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                                    </svg>
-                                                )}
-                                            </button>
-                                        </div>
-                                        <div className="header-content">
-                                            {(match?.[2] || fileOnlyMatch?.[1]) && (
-                                                <div className="file-name">
-                                                    {match?.[2] || fileOnlyMatch?.[1]}
-                                                </div>
-                                            )}
-                                            {match?.[1] && (
-                                                <div className="language-label">
-                                                    {match[1]}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <SyntaxHighlighter
-                                        style={oneLight}
-                                        language={match?.[1] || 'text'}
-                                        showLineNumbers={true}
-                                        customStyle={{
-                                            margin: 0,
-                                            padding: "1.5rem",
-                                            fontSize: "13px",
-                                        }}
-                                        wrapLines={true}
-                                        lineProps={() => ({
-                                            style: {
-                                                display: "block",
-                                                width: "100%"
-                                            }
-                                        })}
-                                        lineNumberStyle={() => ({
-                                            minWidth: "2.5em",
-                                            paddingRight: "1em",
-                                            textAlign: "right",
-                                            userSelect: "none",
-                                            marginRight: "1em",
-                                        })}
-                                        {...props}>
-                                        {String(children).trim()}
-                                    </SyntaxHighlighter>
-                                </div>
-                            );
-                        },
-                        tip: ({node, children, className, ...props}) => (
-                            <div className={`callout ${className}`} {...props}>
-                                <div className="callout-icon">
-                                    <HiLightBulb size={20} />
-                                </div>
-                                <div className="callout-content">{children}</div>
-                            </div>
-                        ),
-                        info: ({node, children, className, ...props}) => (
-                            <div className={`callout ${className}`} {...props}>
-                                <div className="callout-icon">
-                                    <IoInformationCircle size={20} />
-                                </div>
-                                <div className="callout-content">{children}</div>
-                            </div>
-                        ),
-                        warning: ({node, children, className, ...props}) => (
-                            <div className={`callout ${className}`} {...props}>
-                                <div className="callout-icon">
-                                    <BiSolidError size={20} />
-                                </div>
-                                <div className="callout-content">{children}</div>
-                            </div>
-                        ),
-                        danger: ({node, children, className, ...props}) => (
-                            <div className={`callout ${className}`} {...props}>
-                                <div className="callout-icon">
-                                    <MdDangerous size={20} />
-                                </div>
-                                <div className="callout-content">{children}</div>
-                            </div>
-                        ),
-                        a: ({node, children, href, ...props}) => {
-                            const text = String(children);
-                            
-                            const downloadMatch = text.match(/^!download\s+(.+)$/);
-                            const docsMatch = text.match(/^!docs\s+(.+)$/);
-                            const userMatch = text.match(/^!user\s+(.+)$/);
-                            
-                            if (downloadMatch) {
-                                return (
-                                    <a 
-                                        href={href} 
-                                        className="download-link" 
-                                        download 
-                                        {...props}
-                                    >
-                                        <HiDownload className="download-icon" />
-                                        <span>{downloadMatch[1]}</span>
-                                    </a>
-                                );
-                            }
-
-                            if (docsMatch) {
-                                return (
-                                    <a 
-                                        href={href} 
-                                        className="docs-link" 
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        {...props}
-                                    >
-                                        <HiDocument className="docs-icon" />
-                                        <span>{docsMatch[1]}</span>
-                                    </a>
-                                );
-                            }
-
-                            if (userMatch && href) {
-                                // URL에서 도메인 추출
-                                let domain;
-                                try {
-                                    domain = new URL(href).hostname;
-                                } catch (e) {
-                                    domain = href;
-                                }
-
-                                return (
-                                    <a 
-                                        href={href} 
-                                        className="user-link" 
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        {...props}
-                                    >
-                                        <img 
-                                            src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
-                                            alt=""
-                                            className="favicon-icon"
-                                        />
-                                        <span>{userMatch[1]}</span>
-                                    </a>
-                                );
-                            }
-                            
-                            return (
-                                <a href={href} {...props}>
-                                    {children}
-                                </a>
-                            );
-                        },
-                        img: ({node, ...props}) => {
-                            const altText = props.alt || '';
-                            
-                            // 옵션들 확인
-                            const widthMatch = altText.match(/!width=(\d+)\s*/);
-                            const hasShadow = altText.includes('!shadow');
-                            const alignMatch = altText.match(/!align=(left|center|right)\s*/);
-                            const hideCaption = altText.includes('!nocap');
-                            
-                            // 실제 alt 텍스트 추출 (모든 옵션 제거)
-                            const cleanAltText = altText
-                                .replace(/!width=\d+\s*/, '')
-                                .replace(/!align=(left|center|right)\s*/, '')
-                                .replace('!shadow', '')
-                                .replace('!nocap', '')
-                                .trim();
-                            
-                            const image = (
-                                <img
-                                    {...props}
-                                    alt={cleanAltText}
-                                    className={`${hasShadow ? 'shadow' : ''} ${alignMatch ? `align-${alignMatch[1]}` : ''}`}
-                                    style={{
-                                        ...(widthMatch && { width: `${widthMatch[1]}px` })
-                                    }}
-                                />
-                            );
-
-                            // 캡션이 없는 경우에도 정렬을 위해 컨테이��� 사용
-                            return cleanAltText && !hideCaption ? (
-                                <div className={`image-container ${alignMatch ? `align-${alignMatch[1]}` : ''}`}>
-                                    {image}
-                                    <div className="image-caption">{cleanAltText}</div>
-                                </div>
-                            ) : (
-                                <div className={`image-container ${alignMatch ? `align-${alignMatch[1]}` : ''}`}>
-                                    {image}
-                                </div>
-                            );
-                        }
-                    }}>
-                    {article.content}
-                </ReactMarkdown>
+                <MarkdownRenderer content={article.content} />
             </div>
         </article>
     );
