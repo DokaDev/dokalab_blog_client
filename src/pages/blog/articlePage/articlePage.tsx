@@ -11,8 +11,15 @@ import {
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import remarkGfm from "remark-gfm";
 import remarkEmoji from 'remark-emoji';
+import remarkDirective from 'remark-directive';
 import { useState } from 'react';
 import type { Components } from 'react-markdown';
+import { visit } from 'unist-util-visit';
+import { h } from 'hastscript';
+import { HiLightBulb } from "react-icons/hi";
+import { IoInformationCircle } from "react-icons/io5";
+import { BiSolidError } from "react-icons/bi";
+import { MdDangerous } from "react-icons/md";
 
 interface ArticlePageProps {
     id: number;
@@ -22,6 +29,26 @@ interface ArticlePageProps {
     readTime: string;
     category: ArticleCategoryProps;
     tags: TagProps[];
+}
+
+// 커스텀 directive 기 추가
+function remarkDirectiveProcessor() {
+    return (tree) => {
+        visit(tree, (node) => {
+            if (
+                node.type === 'containerDirective' ||
+                node.type === 'leafDirective' ||
+                node.type === 'textDirective'
+            ) {
+                const data = node.data || (node.data = {});
+                data.hName = node.name;
+                data.hProperties = {
+                    ...node.attributes,
+                    className: `callout callout-${node.name}`
+                };
+            }
+        });
+    };
 }
 
 const ArticlePage: React.FC = () => {
@@ -239,9 +266,36 @@ export default function DynamicComponent() {
 }
 \`\`\`
 
----
+\`\`\`
+export default function DynamicComponent() {
+    return <div>Dynamic Route Component</div>;
+}
+\`\`\`
 
-*Code block test cases added: March 21, 2024*`,
+---
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=1000&width=435&lines=%F0%9F%9A%80+Building+the+Future%2C+One+Line+at+a+Time!+%F0%9F%92%BB;%F0%9F%94%A7+Turning+Ideas+into+Reality+with+Code+%E2%9C%8D%F0%9F%8F%BB;%F0%9F%A5%83+Developer+by+Day%2C+Whiskey+Lover+by+Night+%F0%9F%8C%99;%F0%9F%96%A5%EF%B8%8F+Beyond+Frameworks%3A+Mastering+the+Core+%F0%9F%9B%A1%EF%B8%8F)](https://git.io/typing-svg)
+
+*Code block test cases added: March 21, 2024*
+
+## Callout Examples
+
+:::tip
+Here's a helpful tip for optimizing your React Query cache!
+:::
+
+:::info
+React Query v5 introduces breaking changes in the API.
+Please check the migration guide before upgrading.
+:::
+
+:::warning
+Be careful when implementing optimistic updates with
+complex data structures.
+:::
+
+:::danger
+Never expose your API keys in client-side code!
+:::`,
         date: "2024-03-20",
         readTime: "8 min read",
         category: {
@@ -294,10 +348,28 @@ export default function DynamicComponent() {
             </header>
             <div className="article-content">
                 <ReactMarkdown
-                    remarkPlugins={[remarkGfm, remarkEmoji]}
+                    remarkPlugins={[
+                        remarkGfm,
+                        remarkEmoji,
+                        remarkDirective,
+                        remarkDirectiveProcessor
+                    ]}
                     components={{
-                        code({ node, inline, className, children, ...props }: Components['code']) {
+                        code({ node, inline, className, children, ...props }) {
+                            // 코드 블록인지 확인하는 정확한 방법
+                            const isCodeBlock = node?.position?.start?.line !== node?.position?.end?.line || className?.includes('language-');
+                            
+                            if (!isCodeBlock) {
+                                return (
+                                    <code className={className} {...props}>
+                                        {children}
+                                    </code>
+                                );
+                            }
+
                             const [copied, setCopied] = useState(false);
+                            const match = /language-(\w+)(?::(.+))?/.exec(className || '');
+                            const fileOnlyMatch = /language-:(.+)/.exec(className || '');
 
                             const handleCopy = () => {
                                 navigator.clipboard.writeText(String(children).trim())
@@ -306,12 +378,8 @@ export default function DynamicComponent() {
                                         setTimeout(() => setCopied(false), 2000);
                                     });
                             };
-
-                            const isCodeBlock = !inline && (className || (!className && node?.position));
-                            const match = className ? /language-(\w+)(?::(.+))?/.exec(className) : null;
-                            const fileOnlyMatch = className ? /language-:(.+)/.exec(className) : null;
                             
-                            return isCodeBlock ? (
+                            return (
                                 <div className="code-block-container">
                                     <div className={`code-block-header ${(!match && !fileOnlyMatch) ? 'no-language-file' : ''}`}>
                                         <div className="header-left">
@@ -377,12 +445,40 @@ export default function DynamicComponent() {
                                         {String(children).trim()}
                                     </SyntaxHighlighter>
                                 </div>
-                            ) : (
-                                <code className={className} {...props}>
-                                    {children}
-                                </code>
                             );
                         },
+                        tip: ({ node, children, className, ...props }) => (
+                            <div className={`callout ${className}`} {...props}>
+                                <div className="callout-icon">
+                                    <HiLightBulb size={20} />
+                                </div>
+                                <div className="callout-content">{children}</div>
+                            </div>
+                        ),
+                        info: ({ node, children, className, ...props }) => (
+                            <div className={`callout ${className}`} {...props}>
+                                <div className="callout-icon">
+                                    <IoInformationCircle size={20} />
+                                </div>
+                                <div className="callout-content">{children}</div>
+                            </div>
+                        ),
+                        warning: ({ node, children, className, ...props }) => (
+                            <div className={`callout ${className}`} {...props}>
+                                <div className="callout-icon">
+                                    <BiSolidError size={20} />
+                                </div>
+                                <div className="callout-content">{children}</div>
+                            </div>
+                        ),
+                        danger: ({ node, children, className, ...props }) => (
+                            <div className={`callout ${className}`} {...props}>
+                                <div className="callout-icon">
+                                    <MdDangerous size={20} />
+                                </div>
+                                <div className="callout-content">{children}</div>
+                            </div>
+                        ),
                     }}>
                     {article.content}
                 </ReactMarkdown>
