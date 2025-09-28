@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono }from "next/font/google";
 import { ChildrenType } from "./common/type/children";
+import { ApolloWrapper } from "./apollo/apollo-wrapper";
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: ChildrenType) {
   return (
     <html lang='en' className={ibmPlexMono.variable}>
       <body className={ibmPlexMono.className}>
+        <ApolloWrapper>
           {children}
+        </ApolloWrapper>
       </body>
     </html>
   )
